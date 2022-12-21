@@ -31,10 +31,10 @@ class ViewController: UIViewController {
     @IBAction func buttonTapped() {
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let descriptionVC = segue.destination as? DescriptionViewController else { return }
-        descriptionVC.
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let descriptionVC = segue.destination as? DescriptionViewController else { return }
+//        descriptionVC.
+//    }
     
     private func fetchImage() {
         NetworkManager.shared.fetchImages(from: astronomy?.hdurl ?? "") { [weak self] result in
