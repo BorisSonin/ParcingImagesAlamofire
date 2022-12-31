@@ -20,10 +20,10 @@ class NetworkManager {
     func fetchImages(from url: String, completion: @escaping(Result<[AstronomyPicture], AFError>) -> Void) {
         AF.request(url)
             .validate()
-            .responseJSON { dataResponse in
+            .response { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-                    let images = AstronomyPicture.getImage(from: value)
+                    let images = AstronomyPicture.getImage(from: value ?? "")
                     completion(.success(images))
                 case .failure(let error):
                     completion(.failure(error))
@@ -44,3 +44,4 @@ class NetworkManager {
             }
     }
 }
+

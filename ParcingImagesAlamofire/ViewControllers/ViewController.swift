@@ -11,9 +11,10 @@ class ViewController: UIViewController {
     
     
     @IBOutlet var label: UILabel!
-    @IBOutlet var descriptionButton: UIButton!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet var textView: UITextView!
     
     private var images: [AstronomyPicture] = []
     
@@ -22,24 +23,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         label.text = "Astronomy Picture of the Day"
-        descriptionButton.setTitle("Description", for: .normal)
+        textView.text = astronomy?.explanation
         activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
         
     }
     
-    @IBAction func buttonTapped() {
-    }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let descriptionVC = segue.destination as? DescriptionViewController else { return }
-//        descriptionVC.
-//    }
-    
     private func fetchImage() {
-        NetworkManager.shared.fetchImages(from: astronomy?.hdurl ?? "") { [weak self] result in
+        NetworkManager.shared.fetchData(from: astronomy?.url ?? "") { [weak self] result in
             switch result {
-                
             case .success(let imageData):
                 self?.imageView.image = UIImage(data: imageData)
                 print(imageData)
@@ -51,14 +43,15 @@ class ViewController: UIViewController {
     }
     
     private func parcingPictures() {
-        NetworkManager.shared.fetchData(from: urlString) { [weak self] result in
+        NetworkManager.shared.fetchImages(from: urlString) { [weak self] result in
             switch result {
-            case .success(let astronomy):
-                self?.astronomy = astronomy
-                self?.fetchImage()
+            case .success(let astronomyImages):
+                self?.images = astronomyImages
+//                self?.fetchImage()
             case .failure(let error):
                 print(error)
             }
         }
     }
 }
+

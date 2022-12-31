@@ -32,3 +32,4 @@ struct AstronomyPicture: Decodable {
         return imagesData.compactMap{ AstronomyPicture(imageData: $0) }
     }
 }
+
